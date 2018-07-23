@@ -41,7 +41,7 @@ class Parser {
      *
      * @param string $id
      */
-    public function __construct(string $id, $user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36") {
+    public function __construct(string $id, $user_agent) {
         $this->id = $id;
         $this->crawler = new Crawler();
     }
