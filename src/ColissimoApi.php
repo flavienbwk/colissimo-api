@@ -2,8 +2,8 @@
 
 namespace Hedii\ColissimoApi;
 
-class ColissimoApi
-{
+class ColissimoApi {
+
     /**
      * Get the colissimo status.
      *
@@ -11,8 +11,7 @@ class ColissimoApi
      * @return array
      * @throws \Hedii\ColissimoApi\ColissimoApiException
      */
-    public function get(string $id): array
-    {
+    public function get(string $id) {
         $data = (new Parser($id))->run();
 
         if (empty($data)) {
@@ -21,4 +20,5 @@ class ColissimoApi
 
         return $data;
     }
+
 }

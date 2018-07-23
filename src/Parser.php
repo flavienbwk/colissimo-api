@@ -6,8 +6,8 @@ use Exception;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Parser
-{
+class Parser {
+
     /**
      * The colissimo base url.
      *
@@ -41,8 +41,7 @@ class Parser
      *
      * @param string $id
      */
-    public function __construct(string $id)
-    {
+    public function __construct(string $id) {
         $this->id = $id;
         $this->crawler = new Crawler();
     }
@@ -53,21 +52,20 @@ class Parser
      * @return array
      * @throws \Hedii\ColissimoApi\ColissimoApiException
      */
-    public function run(): array
-    {
+    public function run() {
         $html = $this->getHtml($this->id);
 
-        if (! $html) {
+        if (!$html) {
             return [];
         }
 
         $this->crawler->addHtmlContent($html);
 
         $nodeValues = $this->crawler
-            ->filter('table tbody tr td')
-            ->each(function (Crawler $node) {
-                return trim($node->text());
-            });
+                ->filter('table tbody tr td')
+                ->each(function (Crawler $node) {
+            return trim($node->text());
+        });
 
         if ($nodeValues) {
             foreach (array_chunk($nodeValues, 3) as $row) {
@@ -91,17 +89,14 @@ class Parser
      * @return null|string
      * @throws \Hedii\ColissimoApi\ColissimoApiException
      */
-    private function getHtml(string $id): ?string
-    {
+    private function getHtml(string $id) {
         try {
             $response = $this->client()->get("{$this->baseUrl}/{$id}");
 
             return $response->getBody()->getContents() ?: null;
         } catch (Exception $exception) {
             throw new ColissimoApiException(
-                "Cannot get the colissimo url `{{$this->baseUrl}/{$id}}`. {$exception->getMessage()}. See stack trace.",
-                $exception->getCode(),
-                $exception
+            "Cannot get the colissimo url `{{$this->baseUrl}/{$id}}`. {$exception->getMessage()}. See stack trace.", $exception->getCode(), $exception
             );
         }
     }
@@ -111,8 +106,7 @@ class Parser
      *
      * @return \GuzzleHttp\Client
      */
-    private function client(): Client
-    {
+    private function client() {
         return new Client([
             'connect_timeout' => 10,
             'timeout' => 30,
@@ -124,4 +118,5 @@ class Parser
             ]
         ]);
     }
+
 }
