@@ -30,6 +30,13 @@ class Parser {
     private $crawler;
 
     /**
+     * The user agent string.
+     *
+     * @var string $user_agent
+     */
+    private $user_agent;
+
+    /**
      * The parsed data.
      *
      * @var array
@@ -43,6 +50,7 @@ class Parser {
      */
     public function __construct(string $id, $user_agent) {
         $this->id = $id;
+        $this->user_agent = $user_agent;
         $this->crawler = new Crawler();
     }
 
@@ -52,8 +60,8 @@ class Parser {
      * @return array
      * @throws \Hedii\ColissimoApi\ColissimoApiException
      */
-    public function run($user_agent) {
-        $html = $this->getHtml($this->id, $user_agent);
+    public function run() {
+        $html = $this->getHtml($this->id, $this->user_agent);
 
         if (!$html) {
             return [];
