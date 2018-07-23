@@ -4,7 +4,7 @@
 A php package to track Colissimo (La Poste) parcels
 
 ### Requirements
-- PHP >= 7.1
+- PHP >= 7.0
 - XML PHP Extension
 - Curl PHP Extension
 
