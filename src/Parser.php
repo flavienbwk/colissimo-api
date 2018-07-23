@@ -41,7 +41,7 @@ class Parser {
      *
      * @param string $id
      */
-    public function __construct(string $id) {
+    public function __construct(string $id, $user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36") {
         $this->id = $id;
         $this->crawler = new Crawler();
     }
@@ -52,8 +52,8 @@ class Parser {
      * @return array
      * @throws \Hedii\ColissimoApi\ColissimoApiException
      */
-    public function run() {
-        $html = $this->getHtml($this->id);
+    public function run($user_agent) {
+        $html = $this->getHtml($this->id, $user_agent);
 
         if (!$html) {
             return [];
@@ -89,9 +89,9 @@ class Parser {
      * @return null|string
      * @throws \Hedii\ColissimoApi\ColissimoApiException
      */
-    private function getHtml(string $id) {
+    private function getHtml(string $id, $user_agent) {
         try {
-            $response = $this->client()->get("{$this->baseUrl}/{$id}");
+            $response = $this->client($user_agent)->get("{$this->baseUrl}/{$id}");
 
             return $response->getBody()->getContents() ?: null;
         } catch (Exception $exception) {
@@ -106,14 +106,14 @@ class Parser {
      *
      * @return \GuzzleHttp\Client
      */
-    private function client() {
+    private function client($user_agent) {
         return new Client([
             'connect_timeout' => 10,
             'timeout' => 30,
             'verify' => false,
             'headers' => [
                 'X-Requested-With' => 'XMLHttpRequest',
-                'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36',
+                'User-Agent' => $user_agent,
                 'Referer' => 'https://www.laposte.fr/particulier/outils/suivre-vos-envois'
             ]
         ]);
