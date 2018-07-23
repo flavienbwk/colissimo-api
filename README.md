@@ -10,18 +10,18 @@ A php package to track Colissimo (La Poste) parcels
 
 ### Installation
 ````bash
-composer require hedii/colissimo-api
+composer require flavienbwk/colissimo-api
 ````
 
 ### Usage
 ````php
 require 'vendor/autoload.php';
 
-$colissimo = new \Hedii\ColissimoApi\ColissimoApi();
+$colissimo = new \flavienbwk\ColissimoApi\ColissimoApi();
 
 try {
     $result = $colissimo->get('your_colissimo_id_here');
-} catch (\Hedii\ColissimoApi\ColissimoApiException $e) {
+} catch (\flavienbwk\ColissimoApi\ColissimoApiException $e) {
     // ...
 }
 ````

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hedii\ColissimoApi;
+namespace flavienbwk\ColissimoApi;
 
 use Exception;
 use GuzzleHttp\Client;
